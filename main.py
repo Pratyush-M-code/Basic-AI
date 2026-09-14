@@ -5,29 +5,57 @@ import matplotlib.pyplot as plt
 import keras
 from keras import layers, models 
  
-TRAIN_DIR = "data/train" 
-TEST_DIR = "data/test" 
+DIR = "Interstellar Objects" 
 MODEL_FILE = "Blood_Sweat_Tears.h5" 
-IMG_SIZE = (1024, 1024) 
+
+IMG_SIZE = (512, 512) 
 BATCH_SIZE = int(input("Batch Size -> "))
 EPOCHS = int(input("No. of Epochs -> ")) 
  
 mode = input("What want to do -> [train/test] ").lower()   
  
 if mode == "train": 
+
     train_data = keras.utils.image_dataset_from_directory( 
-        TRAIN_DIR, image_size=IMG_SIZE, batch_size=BATCH_SIZE 
-    ) 
+        DIR,
+        validation_split=0.2,
+        subset="training",
+        shuffle=True,
+        seed=110, 
+        image_size=IMG_SIZE, 
+        batch_size=BATCH_SIZE 
+    )
+    train_data = (train_data.cache().prefetch(tf.data.AUTOTUNE))
+    validation_data = keras.utils.image_dataset_from_directory( 
+            DIR,
+            validation_split=0.2,
+            subset="validation",
+            shuffle=True,
+            seed=110, 
+            image_size=IMG_SIZE, 
+            batch_size=BATCH_SIZE 
+        )  
+    validation_data = (validation_data.cache().prefetch(tf.data.AUTOTUNE))
+
     class_names = train_data.class_names 
     print("Classes:", class_names) 
  
     print("Model be training rn.") 
     model = models.Sequential([ 
-        layers.Rescaling(1./255, input_shape=(IMG_SIZE[0], IMG_SIZE[1], 3)), 
+        layers.Rescaling(1./255, input_shape=(IMG_SIZE[0], IMG_SIZE[1], 3)),
+         
         layers.Conv2D(16, (3,3), activation='relu'), 
-        layers.MaxPooling2D(), 
+        layers.MaxPooling2D(),
+
         layers.Conv2D(32, (3,3), activation='relu'), 
-        layers.MaxPooling2D(), 
+        layers.MaxPooling2D(),
+
+        layers.Conv2D(64, (3,3), activation='relu'), 
+        layers.MaxPooling2D(),
+
+        layers.Conv2D(64, (3,3), activation='relu'), 
+        layers.MaxPooling2D(),  
+
         layers.Flatten(), 
         layers.Dense(64, activation='relu'), 
         layers.Dense(len(class_names), activation='softmax') 
@@ -37,9 +65,20 @@ if mode == "train":
                   loss='sparse_categorical_crossentropy', 
                   metrics=['accuracy']) 
  
-    model.fit(train_data, epochs=EPOCHS) 
+    history = model.fit(train_data,validation_data = validation_data, epochs=EPOCHS, verbose=2) 
     model.save(MODEL_FILE) 
     print("Model save file", MODEL_FILE) 
+
+    acc = history.history['accuracy']
+    val_acc = history.history['val_accuracy']
+    loss = history.history['loss']
+    val_loss = history.history['val_loss']
+
+    plt.plot(range(1, EPOCHS + 1), acc, label='Training Accuracy')
+    plt.plot(range(1, EPOCHS + 1), val_acc, label='Validation Accuracy')
+    plt.title('Training and Validation Accuracy')
+    plt.legend()
+    plt.show()
  
 elif mode == "test": 
     if not os.path.exists(MODEL_FILE): 
