@@ -1,4 +1,5 @@
 import os, sys 
+import csv
 import numpy as np 
 import tensorflow as tf 
 import matplotlib.pyplot as plt 
@@ -8,7 +9,7 @@ from keras import layers, models
 DIR = "Interstellar Objects" 
 MODEL_FILE = "Blood_Sweat_Tears.h5" 
 
-IMG_SIZE = (512, 512) 
+IMG_SIZE = (256, 256) 
 BATCH_SIZE = int(input("Batch Size -> "))
 EPOCHS = int(input("No. of Epochs -> ")) 
  
@@ -25,6 +26,7 @@ if mode == "train":
         image_size=IMG_SIZE, 
         batch_size=BATCH_SIZE 
     )
+    class_names = train_data.class_names
     train_data = (train_data.cache().prefetch(tf.data.AUTOTUNE))
     validation_data = keras.utils.image_dataset_from_directory( 
             DIR,
@@ -37,12 +39,16 @@ if mode == "train":
         )  
     validation_data = (validation_data.cache().prefetch(tf.data.AUTOTUNE))
 
-    class_names = train_data.class_names 
     print("Classes:", class_names) 
  
     print("Model be training rn.") 
-    model = models.Sequential([ 
-        layers.Rescaling(1./255, input_shape=(IMG_SIZE[0], IMG_SIZE[1], 3)),
+    model = models.Sequential([
+        layers.InputLayer(input_shape=(IMG_SIZE[0], IMG_SIZE[1], 3)), 
+        layers.Rescaling(1./255),
+        tf.keras.layers.RandomFlip("horizontal"),
+        tf.keras.layers.RandomRotation(0.2, fill_mode='nearest'),
+        tf.keras.layers.RandomTranslation(0.2,0.2, fill_mode='nearest'),
+        tf.keras.layers.RandomZoom(0.2, fill_mode='nearest'),
          
         layers.Conv2D(16, (3,3), activation='relu'), 
         layers.MaxPooling2D(),
@@ -56,10 +62,11 @@ if mode == "train":
         layers.Conv2D(64, (3,3), activation='relu'), 
         layers.MaxPooling2D(),  
 
-        layers.Flatten(), 
-        layers.Dense(64, activation='relu'), 
-        layers.Dense(len(class_names), activation='softmax') 
-    ]) 
+        layers.GlobalAveragePooling2D(), 
+        layers.Dense(64, activation='relu'),
+        layers.Dropout(0.5),
+        
+        layers.Dense(len(class_names), activation='softmax') ]) 
  
     model.compile(optimizer='adam', 
                   loss='sparse_categorical_crossentropy', 
@@ -79,6 +86,22 @@ if mode == "train":
     plt.title('Training and Validation Accuracy')
     plt.legend()
     plt.show()
+
+    csv_file = "training_history.csv"
+
+    with open(csv_file, 'w', newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(['Epoch', 'Training Accuracy', 'Validation Accuracy', 'Training Loss', 'Validation Loss'])
+        for i in range(EPOCHS):
+            writer.writerow([
+                i + 1,
+                acc[i], 
+                val_acc[i], 
+                loss[i], 
+                val_loss[i]
+            ])
+
+
  
 elif mode == "test": 
     if not os.path.exists(MODEL_FILE): 
@@ -87,7 +110,7 @@ elif mode == "test":
  
     print("Model be testing rn.") 
     test_data = tf.keras.utils.image_dataset_from_directory( 
-        TEST_DIR, image_size=IMG_SIZE, batch_size=BATCH_SIZE 
+        "Intersteller Objects Test", image_size=IMG_SIZE, batch_size=BATCH_SIZE 
     ) 
     class_names = test_data.class_names 
  
