@@ -4,7 +4,8 @@ import numpy as np
 import tensorflow as tf 
 import matplotlib.pyplot as plt 
 import keras
-from keras import layers, models 
+from keras import layers, models
+from keras.optimizers import Adam
 import sklearn
 from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
 
@@ -51,10 +52,10 @@ if mode == "train":
     model = models.Sequential([
         layers.InputLayer(input_shape=(IMG_SIZE[0], IMG_SIZE[1], 3)), 
         layers.Rescaling(1./255),
-        tf.keras.layers.RandomFlip("horizontal"),
-        tf.keras.layers.RandomRotation(0.2, fill_mode='nearest'),
-        tf.keras.layers.RandomTranslation(0.2,0.2, fill_mode='nearest'),
-        tf.keras.layers.RandomZoom(0.2, fill_mode='nearest'),
+        #tf.keras.layers.RandomFlip("horizontal"),
+        #tf.keras.layers.RandomRotation(0.2, fill_mode='nearest'),
+        #tf.keras.layers.RandomTranslation(0.2,0.2, fill_mode='nearest'),
+        #tf.keras.layers.RandomZoom(0.2, fill_mode='nearest'),
          
         layers.Conv2D(16, (3,3), activation='relu'), 
         layers.MaxPooling2D(),
@@ -74,7 +75,7 @@ if mode == "train":
         
         layers.Dense(len(class_names), activation='softmax') ]) 
  
-    model.compile(optimizer='adam', 
+    model.compile(optimizer = Adam(learning_rate=1e-4), 
                   loss='sparse_categorical_crossentropy', 
                   metrics=['accuracy']) 
  
@@ -104,7 +105,7 @@ if mode == "train":
     with open(csv_file, 'w', newline="") as f:
         writer = csv.writer(f)
         writer.writerow(['Epoch', 'Training Accuracy', 'Validation Accuracy', 'Training Loss', 'Validation Loss'])
-        for i in range(EPOCHS):
+        for i in range(len(acc)):
             writer.writerow([
                 i + 1,
                 acc[i], 
@@ -146,7 +147,7 @@ elif mode == "test":
     report_dict = classification_report(y_true,y_pred,target_names=class_names,output_dict=True )
     with open(csv_file, 'w', newline="") as f:
         writer = csv.writer(f)
-        writer.writerow/(["class", "precision", "recall", "f1-score", "support"])
+        writer.writerow(["class", "precision", "recall", "f1-score", "support"])
         for label,metrics in report_dict.items():
             if isinstance(metrics,dict):
                 writer.writerow([label, metrics["precision"], metrics["recall"], metrics["f1-score"], metrics["support"]])

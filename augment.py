@@ -45,7 +45,7 @@ for i in range(0, n_folder):
         if 5 in random_augments:
             cv2.imwrite(os.path.join(folder,current_folder, str(n) + ".5.jpg"), cv2.flip(img, 0))
 
-        if 6 in random_augments:
+        if 6 in random_augments:    
             hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
             hsv[:,:,1] = hsv[:,:,1] * 0.5
             cv2.imwrite(os.path.join(folder,current_folder, str(n) + ".6.jpg"), cv2.cvtColor(hsv,cv2.COLOR_HSV2BGR))
