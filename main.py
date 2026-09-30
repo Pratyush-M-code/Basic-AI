@@ -13,14 +13,14 @@ from sklearn.metrics import classification_report, confusion_matrix, ConfusionMa
 DIR = "Interstellar Objects" 
 File =  str(input("Model File Name -> "))
 MODEL_FILE = File + ".keras"
-
-IMG_SIZE = (256, 256) 
-BATCH_SIZE = int(input("Batch Size -> "))
-EPOCHS = int(input("No. of Epochs -> ")) 
+BATCH_SIZE = int(input("Batch Size -> ")) 
+IMG_SIZE = (256, 256)
  
 mode = input("What want to do -> [train/test] ").lower()   
  
 if mode == "train": 
+
+    EPOCHS = int(input("No. of Epochs -> ")) 
 
     train_data = keras.utils.image_dataset_from_directory( 
         DIR,
@@ -147,10 +147,11 @@ elif mode == "test":
     report_dict = classification_report(y_true,y_pred,target_names=class_names,output_dict=True )
     with open(csv_file, 'w', newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["class", "precision", "recall", "f1-score", "support"])
+        writer.writerow(["class", "precision", "recall", "f1-score", "support", "test-accuracy"])
         for label,metrics in report_dict.items():
             if isinstance(metrics,dict):
-                writer.writerow([label, metrics["precision"], metrics["recall"], metrics["f1-score"], metrics["support"]])
+                writer.writerow([label, metrics["precision"], metrics["recall"], metrics["f1-score"], metrics["support"],""])
+        writer.writerow(["overall", "", "", "", "", acc])
 
     for images, labels in test_data.take(1): 
         predictions = model.predict(images) 

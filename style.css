@@ -1,0 +1,116 @@
+:root {
+    --bg: #0b1030;
+    --header: #141a4a;
+    --footer: #0f1640;
+    --panel: #182060;
+    --border: #4a5cc0;
+    --shadow: #05081c;
+    --overlay: rgba(20, 20, 20, 0.2);
+    --h1: #ffd85a;
+    --h2: #8fd0ff;
+    --text: #d7def5;
+    --muted: #93a0d0;
+    --link: #7fe0c8;
+    --star: #fff3c4;
+    --moon: #ffe27a;
+}
+
+body {
+    background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+header {
+    background-color: var(--header);
+    width: 100%;
+}
+
+footer {
+    background-color: var(--footer);
+    width: 100%;
+}
+
+h1 {
+    color: var(--h1);
+    font-size: 2rem;
+    font-family: var(--font-heading);
+    line-height: 1.2;
+    font-weight: 700;
+    font-style: normal;
+    font-optical-sizing: auto;
+}
+
+h2 {
+    color: var(--h2);
+    font-size: 1.75rem;
+    font-family: var(--font-heading);
+    line-height: 1.15;
+    font-weight: 700;
+    font-style: normal;
+    font-optical-sizing: auto;
+}
+
+p {
+    color: var(--text);
+    font-size: 1rem;
+    font-family: var(--font-body);
+    line-height: 1.2;
+    font-weight: 400;
+    font-style: normal;
+    font-optical-sizing: auto;
+}
+
+.sky {
+    position: fixed;
+    inset: 0;
+    background-color: var(--bg);
+    z-index: -1;
+}
+
+.sky::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 4px;
+    box-shadow: var(--stars-obj);
+}
+
+.sky::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    box-shadow: var(--stars-obj);
+}
+
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 1;
+        color: #d0e1f9;
+    }
+
+    50% {
+        opacity: 0.25;
+        color: #e8d5b1;
+    }
+}
+
+.sky::before {
+    animation: twinkle 4s steps(2, end) infinite;
+}
+
+.sky::after {
+    animation: twinkle 6s steps(3, end) infinite reverse;
+}
