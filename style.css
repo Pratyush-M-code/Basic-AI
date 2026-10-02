@@ -1,7 +1,7 @@
 :root {
-    --bg: #0b1030;
-    --header: #141a4a;
-    --footer: #0f1640;
+    --bg: #060918;
+    --header: rgba(10, 11, 48, 0.5);
+    --footer: rgba(10, 11, 48, 0.5);
     --panel: #182060;
     --border: #4a5cc0;
     --shadow: #05081c;
@@ -13,6 +13,9 @@
     --link: #7fe0c8;
     --star: #fff3c4;
     --moon: #ffe27a;
+
+    --font-heading: "Pixelify Sans";
+    --font-body: Monospace;
 }
 
 body {
@@ -37,20 +40,20 @@ footer {
 
 h1 {
     color: var(--h1);
-    font-size: 2rem;
+    font-size: 3rem;
     font-family: var(--font-heading);
     line-height: 1.2;
-    font-weight: 700;
+    font-weight: 400;
     font-style: normal;
     font-optical-sizing: auto;
 }
 
 h2 {
     color: var(--h2);
-    font-size: 1.75rem;
+    font-size: 2.25rem;
     font-family: var(--font-heading);
     line-height: 1.15;
-    font-weight: 700;
+    font-weight: 400;
     font-style: normal;
     font-optical-sizing: auto;
 }
@@ -70,47 +73,28 @@ p {
     inset: 0;
     background-color: var(--bg);
     z-index: -1;
+    overflow: hidden;
 }
 
-.sky::after {
-    content: "";
+.star {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 4px;
-    box-shadow: var(--stars-obj);
+    border-radius: 50%;
+    background: var(--star);
+    box-shadow: 0 0 6px var(--star);
+    animation-name: twinkle;
+    animation-iteration-count: infinite;
 }
-
-.sky::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 2px;
-    height: 2px;
-    box-shadow: var(--stars-obj);
-}
-
 
 @keyframes twinkle {
 
     0%,
     100% {
         opacity: 1;
-        color: #d0e1f9;
+        transform: scale(1);
     }
 
     50% {
         opacity: 0.25;
-        color: #e8d5b1;
+        transform: scale(0.65);
     }
-}
-
-.sky::before {
-    animation: twinkle 4s steps(2, end) infinite;
-}
-
-.sky::after {
-    animation: twinkle 6s steps(3, end) infinite reverse;
 }

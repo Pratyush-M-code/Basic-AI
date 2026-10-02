@@ -1,0 +1,32 @@
+.sky {
+    position: fixed;
+    inset: 0;
+    background-color: var(--bg);
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* Individual stars */
+.star {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--star);
+    box-shadow: 0 0 6px var(--star);
+    animation-name: twinkle;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+/* Each star starts bright, dims, then brightens */
+@keyframes twinkle {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.15;
+        transform: scale(0.65);
+    }
+}
