@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=VT323&display=swap"
         rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Pixelify+Sans:wght@400..700&family=VT323&display=swap"
+        rel="stylesheet">
     <title>Basic AI</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -19,23 +22,39 @@
     </header>
 
     <main>
-        <div class="partition" id="intro">
-            <h1>What is this project about?</h1>
+        <div class="partition pixel-corners" style="--ps:4;--steps:5;" id="intro">
+            <h2>What is this project about?</h2>
+            <p>This project tests whether small datasets can be used to train CNN and AI models effectively. I use image
+                augmentation to see which level of image variation affects the final result. To show that this can be
+                done on my own principles, the project uses only open data from NASA and ESO, so no one's work is used
+                without permission.</p>
+
+            <h2>The problem</h2>
+            <p>AI models are often trained on large datasets to improve performance and generalization. This practice
+                leads to work by human artists and writers being stolen by corporations. This project tries to address
+                this issue in two ways.
+                <br> 1. I only use open, publicly available NASA and ESO images.
+                <br> 2. I use augmentation (changing the existing images to create more variety) to make a small dataset
+                generate a larger amount of useful data, then test the results against benchmarks to see how the final
+                result is affected.
+            </p>
         </div>
-        <div class="partition" id="idea">
-            <h1>Idea</h1>
+        <div class="partition pixel-corners" style="--ps:4;--steps:5;" id="idea">
+            <h2>Idea</h2>
+            <p>Image augmentation uses pre-existing data to create new data samples that can improve model optimization
+                and generalizability.</p>
         </div>
-        <div class="partition" id="trial">
-            <h1>Try it out!</h1>
+        <div class="pixel-corners" style="--ps:4;--steps:2;" id="trial">
+            <h2>Try it out!</h2>
         </div>
-        <div class="partition" id="model">
-            <h1>Model Architecture</h1>
+        <div class="partition pixel-corners" style="--ps:4;--steps:5;" id="model">
+            <h2>Model Architecture</h2>
         </div>
-        <div class="partition" id="results">
-            <h1>Results</h1>
+        <div class="partition pixel-corners" style="--ps:4;--steps:5;" id="results">
+            <h2>Results</h2>
         </div>
-        <div class="partition" id="github">
-            <h1>Check out the GitHub!</h1>
+        <div class="partition pixel-corners" style="--ps:4;--steps:5;" id="github">
+            <h2>Check out the GitHub!</h2>
         </div>
     </main>
 
