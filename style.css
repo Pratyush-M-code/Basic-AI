@@ -5,7 +5,7 @@
     --panel: rgba(24, 32, 96, 0.5);
     --border: #4a5cc0;
     --shadow: #05081c;
-    --overlay: rgba(20, 20, 20, 0.5);
+    --overlay: rgba(36, 47, 119, 0.5);
     --h1: #ffd85a;
     --h2: #8fd0ff;
     --text: #d7def5;
@@ -13,6 +13,9 @@
     --link: #7fe0c8;
     --star: #fff3c4;
     --moon: #ffe27a;
+    --button: #24408a;
+    --button-hover: #3a5cc0;
+    --active: #ff9f43;
 
     --font-heading: "Pixelify Sans";
     --font-body: "IBM Plex Mono";
@@ -70,6 +73,30 @@ p {
     font-optical-sizing: auto;
 }
 
+.btn {
+    background-color: var(--button);
+    color: var(--text);
+    border: 5px solid var(--border);
+    box-shadow: 0 0 10px var(--shadow);
+    font-size: 1.5rem;
+    font-family: var(--font-body);
+    line-height: 1.2;
+    font-weight: 550;
+    font-style: normal;
+    font-optical-sizing: auto;
+    margin: 0.5vh 1vw;
+    cursor: pointer;
+}
+
+.btn:hover:not(.active) {
+    background-color: var(--button-hover) !important;
+}
+
+.btn.active {
+    background-color: var(--active) !important;
+    color: #000000;
+}
+
 .sky {
     position: fixed;
     inset: 0;
@@ -103,6 +130,14 @@ p {
 
 .partition {
     background-color: var(--panel);
+    margin: 3vh 5vw 1vh;
+    padding: 0.05vh 2vw;
+}
+
+#trial {
+    background-color: var(--overlay);
+    border: 10px solid var(--border);
+    box-shadow: 0 0 10px var(--shadow);
     margin: 3vh 5vw 1vh;
     padding: 0.05vh 2vw;
 }

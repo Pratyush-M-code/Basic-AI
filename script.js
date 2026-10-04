@@ -61,3 +61,34 @@ function pixelateCorner(element, options = {}) {
 }
 
 document.querySelectorAll('.pixel-corners').forEach((element) => pixelateCorner(element));
+
+const allimagebtns = document.querySelectorAll('.image-btn');
+const allaugbtns = document.querySelectorAll('.aug-btn');
+
+function updateBtn(Btn) {
+    if (Btn.classList.contains("active")) {
+        Btn.classList.remove("active");
+    }
+    else {
+        if (Btn.classList.contains("image-btn")) {
+            allimagebtns.forEach((btn) => {
+                btn.classList.remove("active");
+            });
+
+        }
+        if (Btn.classList.contains("aug-btn")) {
+            allaugbtns.forEach((btn) => {
+                btn.classList.remove("active");
+            });
+        }
+        Btn.classList.add("active");
+    }
+    console.log([...document.querySelectorAll(".active")].map(b => b.id));
+}
+allaugbtns.forEach(btn => {
+    btn.onclick = () => updateBtn(btn);
+});
+allimagebtns.forEach(btn => {
+    btn.onclick = () => updateBtn(btn);
+});
+

@@ -13,6 +13,7 @@
         rel="stylesheet">
     <title>Basic AI</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -44,8 +45,25 @@
             <p>Image augmentation uses pre-existing data to create new data samples that can improve model optimization
                 and generalizability.</p>
         </div>
-        <div class="pixel-corners" style="--ps:4;--steps:2;" id="trial">
+        <div class="pixel-corners" style="--ps:10;--steps:1;" id="trial">
             <h2>Try it out!</h2>
+            <button class="pixel-corners btn image-btn" style="--ps:5;--steps:1;" id="planet-btn">Planet</button>
+            <button class="pixel-corners btn image-btn" style="--ps:5;--steps:1;" id="stars-btn">Stars</button>
+            <button class="pixel-corners btn image-btn" style="--ps:5;--steps:1;" id="nebula-btn">Nebula</button>
+            <button class="pixel-corners btn image-btn" style="--ps:5;--steps:1;" id="galaxy-btn">Galaxy</button>
+            <button class="pixel-corners btn image-btn" style="--ps:5;--steps:1;" id="comet-btn">Comet</button>
+            <br>
+            <button class="pixel-corners btn aug-btn" style="--ps:5;--steps:1;" id="Factor-0-btn">Factor 0</button>
+            <button class="pixel-corners btn aug-btn" style="--ps:5;--steps:1;" id="Factor-1-btn">Factor 1</button>
+            <button class="pixel-corners btn aug-btn" style="--ps:5;--steps:1;" id="Factor-2-btn">Factor 2</button>
+            <button class="pixel-corners btn aug-btn" style="--ps:5;--steps:1;" id="Factor-5-btn">Factor 5</button>
+            <button class="pixel-corners btn aug-btn" style="--ps:5;--steps:1;" id="Factor-7-btn">Factor 7</button>
+            <button class="pixel-corners btn aug-btn" style="--ps:5;--steps:1;" id="Factor-10-btn">Factor 10</button>
+            <button class="pixel-corners btn aug-btn" style="--ps:5;--steps:1;" id="Factor-15-btn">Factor 15</button>
+            <br>
+        </div>
+
+        </div>
         </div>
         <div class="partition pixel-corners" style="--ps:4;--steps:5;" id="model">
             <h2>Model Architecture</h2>
@@ -61,8 +79,6 @@
     <footer>
         <h1>Tester</h1>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 
 </html>
