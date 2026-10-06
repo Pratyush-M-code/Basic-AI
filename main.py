@@ -79,7 +79,7 @@ if mode == "train":
                   loss='sparse_categorical_crossentropy', 
                   metrics=['accuracy']) 
  
-    history = model.fit(train_data,validation_data = validation_data, epochs=EPOCHS, callbacks=[early_stopping], verbose=1) 
+    history = model.fit(train_data,validation_data = validation_data, epochs=EPOCHS, callbacks=[early_stopping], verbose=3) 
     model.save(MODEL_FILE) 
     print("Model save file", MODEL_FILE) 
 
@@ -92,13 +92,13 @@ if mode == "train":
     plt.plot(range(1, len(val_acc) + 1), val_acc, label='Validation Accuracy')
     plt.title('Training and Validation Accuracy')
     plt.legend()
-    plt.show()
+    #plt.show()
 
     plt.plot(range(1, len(loss) + 1), loss, label='Training Loss')
     plt.plot(range(1, len(val_loss) + 1), val_loss, label='Validation Loss')
     plt.title('Training and Validation Loss')
     plt.legend()
-    plt.show()
+    #plt.show()
 
     csv_file = File + "_training_history.csv"
 
@@ -133,7 +133,7 @@ elif mode == "test":
 
     y_true,y_pred=[],[]
     for images,labels in test_data:
-        predictions = model.predict(images, verbose=1)
+        predictions = model.predict(images, verbose=3)
         y_true.extend(labels.numpy())
         y_pred.extend(np.argmax(predictions, axis=1)) 
     y_true,y_pred=np.array(y_true),np.array(y_pred)
@@ -158,7 +158,7 @@ elif mode == "test":
         for i in range(min(5, len(images))): 
             plt.imshow(images[i].numpy().astype("uint8")) 
             plt.title(f"Pred: {class_names[np.argmax(predictions[i])]} | True: {class_names[labels[i]]}") 
-            plt.show() 
+            #plt.show() 
  
 else: 
     print("error")
