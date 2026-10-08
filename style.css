@@ -138,6 +138,21 @@ a:hover {
     color: #000000;
 }
 
+#images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+    margin: 3vh 5vw 1vh;
+}
+
+#images img {
+    max-width: 100%;
+    height: auto;
+    border: 5px solid var(--border);
+}
+
 .sky {
     position: fixed;
     inset: 0;

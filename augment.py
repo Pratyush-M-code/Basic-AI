@@ -88,7 +88,7 @@ for i in range(0, n_folder):
 
         if 16 in random_augments:
             cv2.imwrite(os.path.join(folder,current_folder, str(n) + ".16.jpg"), cv2.cvtColor(img,cv2.COLOR_BGR2GRAY))
-
+            
         print("done " + str(n) + ".jpg")
         
 

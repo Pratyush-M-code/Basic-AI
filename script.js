@@ -85,10 +85,44 @@ function updateBtn(Btn) {
     }
     console.log([...document.querySelectorAll(".active")].map(b => b.id));
 }
+
+const placeholder = document.getElementById("images");
+function updateImages() {
+    const activeBtns = [...document.querySelectorAll(".active")].map(b => b.id);
+    const [image, augmentation] = activeBtns;
+    let aug = + augmentation.replace("Factor-", "").replace("-btn", "");
+    let img = image.replace("-btn", "");
+
+    placeholder.innerHTML = "";
+
+    const og = document.createElement("img");
+    og.src = `Elements/${img}/Original.jpg`;
+    og.alt = `${img} Original`;
+    og.setAttribute("width", "150vw");
+    og.setAttribute("height", "150vh");
+    placeholder.appendChild(og);
+
+    for (let i = 1; i <= aug; i++) {
+        const augmentedImage = document.createElement("img");
+        augmentedImage.src = `Elements/${img}/Original.jpg.${i}.jpg`;
+        augmentedImage.alt = `${img} ${i}`;
+        augmentedImage.setAttribute("width", "150vw");
+        augmentedImage.setAttribute("height", "150vh");
+        placeholder.appendChild(augmentedImage);
+    }
+}
+
+
 allaugbtns.forEach(btn => {
-    btn.onclick = () => updateBtn(btn);
+    btn.onclick = () => {
+        updateBtn(btn);
+        updateImages();
+    }
 });
 allimagebtns.forEach(btn => {
-    btn.onclick = () => updateBtn(btn);
+    btn.onclick = () => {
+        updateBtn(btn);
+        updateImages();
+    }
 });
 
