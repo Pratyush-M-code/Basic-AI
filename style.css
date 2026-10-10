@@ -117,6 +117,14 @@ nav a {
         align-items: flex-start;
     }
 
+    #github {
+        flex-direction: column;
+    }
+
+    #github a {
+        font-size: 3rem;
+    }
+
     #title,
     #navigation {
         width: 100%;
