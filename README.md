@@ -66,7 +66,7 @@ The website is plain HTML, CSS and JavaScript with no build step, so it can be h
 
 ### Where do I get the dataset?
 
-This dataset (a training file and a test file) and dataset_sources_combined.csv, which lists the source, license and credit for every image, are at [ZENODO-DOI].
+This dataset (a training file and a test file) and dataset_sources_combined.csv, which lists the source, license and credit for every image, are at [https://zenodo.org/records/23287441?token=eyJhbGciOiJIUzUxMiJ9.eyJpZCI6ImEzN2NkYWFiLWQ2M2UtNDQ3ZC04M2M2LTMwNGI3YzhmNzk0MyIsImRhdGEiOnt9LCJyYW5kb20iOiIzYmI0ZTFiNDg0NTFlZDNjMjViYzg5OGJkMGJlN2U4MCJ9.GpXlO0vDV-MJe3aFGRJuTAim7Iuxs3wpL4-BY8u8GdQnvdKFwgvUiyiS1Oy0C5o-5pbJc8zXYqKGhH89W0f1Og].
 
 ## Acknowledgements
 
