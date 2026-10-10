@@ -248,20 +248,27 @@ svg {
     stroke: var(--border);
 }
 
+a {
+    color: var(--link);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
 #github {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 1.25rem;
     margin-bottom: 1rem;
-    color: var(--link);
-    vertical-align: middle;
 }
 
-a {
-    color: var(--link);
-    font-size: 15rem;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+#github>div:first-child {
+    flex: 1 1 18rem;
+    min-width: 0;
+}
+
+#github a {
+    font-size: 4rem;
 }
 
 .site-footer {
