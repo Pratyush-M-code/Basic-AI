@@ -126,3 +126,122 @@ allimagebtns.forEach(btn => {
     }
 });
 
+
+const COLORS = {
+    Overall: '#ffffff', Comet: '#ff9f43', Galaxy: '#8fd0ff',
+    Nebula: '#c58bff', Planet: '#7fe0c8', Stars: '#ffd85a'
+};
+const MAX_FACTOR = 15;
+const WIDTH = 640, HEIGHT = 360;
+const LEFT = 56, RIGHT = 24, TOP = 20, BOTTOM = 56;
+const PLOT_W = WIDTH - LEFT - RIGHT;
+const PLOT_H = HEIGHT - TOP - BOTTOM;
+
+const data = {};
+let selected = null;
+
+async function loadData() {
+    const response = await fetch('results.csv');
+    const text = await response.text();
+    const rows = text.trim().split('\n').slice(1);
+
+    for (const row of rows) {
+        const [factor, name, mean, min, max] = row.split(',');
+        if (!data[name]) data[name] = {};
+        data[name][factor] = {
+            mean: Number(mean),
+            min: min ? Number(min) : null,
+            max: max ? Number(max) : null
+        };
+    }
+}
+
+function x(factor) { return LEFT + factor * PLOT_W / MAX_FACTOR; }
+function y(score) { return TOP + PLOT_H * (1 - score / 100); }
+
+
+function drawGrid() {
+    let svg = '';
+    for (const score of [0, 25, 50, 75, 100]) {
+        svg += `<line x1="${LEFT}" x2="${WIDTH - RIGHT}" y1="${y(score)}" y2="${y(score)}" stroke="#4a5cc0" stroke-opacity="0.35"/>`;
+        svg += `<text x="${LEFT - 8}" y="${y(score) + 4}" text-anchor="end" fill="#93a0d0" font-size="12">${score}</text>`;
+    }
+    for (let f = 0; f <= MAX_FACTOR; f++) {
+        svg += `<text x="${x(f)}" y="${HEIGHT - 32}" text-anchor="middle" fill="#d7def5" font-size="12">${f}</text>`;
+    }
+    svg += `<text x="${LEFT + PLOT_W / 2}" y="${HEIGHT - 10}" text-anchor="middle" fill="#93a0d0" font-size="13">Augmentation factor</text>`;
+    return svg;
+}
+
+function drawLine(name) {
+    const color = COLORS[name];
+    const faded = selected !== null && selected !== name;
+    const opacity = faded ? 0.15 : 1;
+    const dash = name === 'Overall' ? '8 6' : 'none';
+
+    let points = '';
+    let squares = '';
+    for (let f = 0; f <= MAX_FACTOR; f++) {
+        const result = data[name][f];
+        if (!result) continue
+        points += `${x(f)},${y(result.mean)} `;
+        squares += `<rect x="${x(f) - 4}" y="${y(result.mean) - 4}" width="8" height="8" fill="${color}"/>`;
+    }
+
+    return `<g opacity="${opacity}">
+    <polyline points="${points}" fill="none" stroke="${color}" stroke-width="3" stroke-dasharray="${dash}"/>
+    ${squares}
+  </g>`;
+}
+
+function drawRange(name) {
+    let svg = '';
+    for (let f = 0; f <= MAX_FACTOR; f++) {
+        const result = data[name][f];
+        if (!result || result.min === null) continue;
+        svg += `<line x1="${x(f)}" x2="${x(f)}" y1="${y(result.max)}" y2="${y(result.min)}" stroke="#fff" stroke-width="2"/>`;
+        svg += `<line x1="${x(f) - 5}" x2="${x(f) + 5}" y1="${y(result.max)}" y2="${y(result.max)}" stroke="#fff" stroke-width="2"/>`;
+        svg += `<line x1="${x(f) - 5}" x2="${x(f) + 5}" y1="${y(result.min)}" y2="${y(result.min)}" stroke="#fff" stroke-width="2"/>`;
+    }
+    return svg;
+}
+
+function drawChart() {
+    const names = Object.keys(data).filter(name => name !== selected);
+    if (selected) names.push(selected);
+
+    let svg = drawGrid();
+    for (const name of names) svg += drawLine(name);
+    if (selected) svg += drawRange(selected);
+
+    document.getElementById('chart').innerHTML = svg;
+
+    document.getElementById('note').textContent = selected
+        ? `${selected}: white bars show the lowest to highest run. Click again to reset.`
+        : 'Pick a class to fade the others and see its spread.';
+
+    for (const button of document.querySelectorAll('#buttons button')) {
+        button.setAttribute('aria-pressed', button.textContent === selected);
+    }
+}
+
+//<button class="pixel-corners btn aug-btn" style="--ps:5;--steps:1;" id="Factor-15-btn">Factor 15</button>
+function createButtons() {
+    for (const name of Object.keys(data)) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'pixel-corners btn';
+        button.style = '--ps:5;--steps:1;'
+        button.textContent = name;
+        button.onclick = function () {
+            selected = (selected === name) ? null : name;    // clicking again resets
+            drawChart();
+        };
+        document.getElementById('buttons').appendChild(button);
+    }
+}
+
+loadData().then(function () {
+    createButtons();
+    drawChart();
+});

@@ -78,16 +78,77 @@
             <div id="images"></div>
         </div>
 
-        </div>
-        </div>
         <div class="partition pixel-corners" style="--ps:4;--steps:5;" id="model">
             <h2>Model Architecture</h2>
+            <div id="flowchart">
+                <svg viewBox="0 0 540 520" role="img" font-family="monospace" font-size="15" font-weight="bold"
+                    text-anchor="middle" shape-rendering="crispEdges" xmlns:c2pa="http://c2pa.org/manifest">
+                    <title id="t">CNN model architecture</title>
+                    <desc id="d">Four blocks of Conv2D and MaxPooling2D with 16, 32, 64 and 64 filters, then global
+                        average pooling, a 64-unit dense layer and a softmax output with one unit per class.</desc>
+
+                    <defs>
+                        <polygon id="arrow" points="260,72 280,72 280,86 292,86 270,106 248,86 260,86" fill="#243f8c"
+                            stroke="#4a5cc0" stroke-width="4" />
+                    </defs>
+
+                    <rect x="20" y="10" width="500" height="60" rx="8" fill="#243f8c" stroke="#4a5cc0"
+                        stroke-width="6" />
+                    <text x="270" y="34" fill="#fff">Conv2D(16, (3,3), activation='relu'),</text>
+                    <text x="270" y="56" fill="#fff">MaxPooling2D(),</text>
+                    <use href="#arrow" />
+
+                    <rect x="20" y="110" width="500" height="60" rx="8" fill="#243f8c" stroke="#4a5cc0"
+                        stroke-width="6" />
+                    <text x="270" y="134" fill="#fff">Conv2D(32, (3,3), activation='relu'),</text>
+                    <text x="270" y="156" fill="#fff">MaxPooling2D(),</text>
+                    <use href="#arrow" y="100" />
+
+                    <rect x="20" y="210" width="500" height="60" rx="8" fill="#243f8c" stroke="#4a5cc0"
+                        stroke-width="6" />
+                    <text x="270" y="234" fill="#fff">Conv2D(64, (3,3), activation='relu'),</text>
+                    <text x="270" y="256" fill="#fff">MaxPooling2D(),</text>
+                    <use href="#arrow" y="200" />
+
+                    <rect x="20" y="310" width="500" height="60" rx="8" fill="#243f8c" stroke="#4a5cc0"
+                        stroke-width="6" />
+                    <text x="270" y="334" fill="#fff">Conv2D(64, (3,3), activation='relu'),</text>
+                    <text x="270" y="356" fill="#fff">MaxPooling2D(),</text>
+                    <use href="#arrow" y="300" />
+
+                    <rect x="20" y="410" width="500" height="90" rx="8" fill="#243f8c" stroke="#4a5cc0"
+                        stroke-width="6" />
+                    <text x="270" y="436" fill="#fff">GlobalAveragePooling2D(),</text>
+                    <text x="270" y="460" fill="#fff">Dense(64, activation='relu'),</text>
+                    <text x="270" y="484" fill="#fff">Dense(len(class_names), activation='softmax')</text>
+                    Inline SVG is not supported in your browser. Please use a modern browser to view this chart.
+                </svg>
+            </div>
         </div>
         <div class="partition pixel-corners" style="--ps:4;--steps:5;" id="results">
             <h2>Results</h2>
+            <svg id="chart" viewBox="0 0 640 360" role="img">
+                Inline SVG is not supported in your browser. Please use a modern browser to view this chart.
+            </svg>
+            <div id="buttons"></div>
+            <p id="note"></p>
+
         </div>
-        <div class="partition pixel-corners" style="--ps:4;--steps:5;" id="github">
+        <div class="partition pixel-corners" style="--ps:4;--steps:5;">
             <h2>Check out the GitHub!</h2>
+            <div id="github">
+                <div>
+                    <p>You can run the model by yourself! Use any dataset of your choosing then run augment.py to
+                        augment the data then main.py to make the model and train and test it! Check the ReadMe for more
+                        details!
+                    </p>
+                </div>
+                <div>
+                    <a href="https://github.com/Pratyush-M-code/Basic-AI" target="_blank" rel="noopener noreferrer"
+                        aria-label="GitHub">
+                        <i class="fa-brands fa-github"></i> </a>
+                </div>
+            </div>
         </div>
     </main>
 

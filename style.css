@@ -106,8 +106,28 @@ nav {
 
 nav a {
     color: var(--link);
+    font-size: 1.75rem;
     text-decoration: none;
 
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #title,
+    #navigation {
+        width: 100%;
+    }
+
+    nav {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 1rem;
+    }
 }
 
 a:hover {
@@ -144,7 +164,7 @@ a:hover {
     justify-content: center;
     align-items: center;
     gap: 1vw;
-    margin: 3vh 5vw 1vh;
+    margin: 3vh 0vw 1vh;
 }
 
 #images img {
@@ -198,6 +218,44 @@ a:hover {
     padding: 0.05vh 2vw;
 }
 
+#flowchart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3vh 5vw 1vh;
+}
+
+svg {
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    display: block;
+}
+
+#flow rect {
+    width: 50vw;
+    height: 10vh;
+    fill: var(--button);
+    stroke-width: 5;
+    stroke: var(--border);
+}
+
+#github {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--link);
+    vertical-align: middle;
+}
+
+a {
+    color: var(--link);
+    font-size: 15rem;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
 .site-footer {
     width: 100%;
     padding: 2rem 1rem;
@@ -218,6 +276,11 @@ a:hover {
     font-size: 1.25rem;
     text-decoration: none;
     transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.footer-socials i {
+    color: inherit;
+    font-size: 1.25rem;
 }
 
 .footer-socials a:hover {
